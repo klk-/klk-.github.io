@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CD Mirror</title>
+    <!-- This file is used by the connection diagnostics tool. -->
+</head>
+<body>
+    <script>
+        function makeUpload() {
+            // Get the size of the upload from the URL
+            var size = /size=(\d+)/.exec(window.location.href)[1] | 0;
+
+            // Let the parent know the upload is starting
+            parent.postMessage('upload_start', '*');
+
+            var xhr;
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                xhr = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+            } else {
+                // Just give up if XHR isn't easily available.
+                return null;
+            }
+            xhr.open('POST', window.location.href, false); // false -> synchronous
+            xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+            // Create an array of characters of length size
+            xhr.send((new Array(size + 1)).join('x'));
+
+            parent.postMessage('upload_complete', '*');
+        }
+        makeUpload();
+    </script>
+</body>
+</html>
