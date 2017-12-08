@@ -22,7 +22,7 @@
                 // Just give up if XHR isn't easily available.
                 return null;
             }
-            xhr.open('POST', window.location.href, false); // false -> synchronous
+            xhr.open('POST', 'https://upload.app.box.com/speedtest', false); // false -> synchronous
             xhr.setRequestHeader('Content-Type', 'application/octet-stream');
             // Create an array of characters of length size
             xhr.send((new Array(size + 1)).join('x'));
